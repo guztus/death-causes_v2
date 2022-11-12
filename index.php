@@ -10,14 +10,14 @@ if (($handle = fopen("vtmec-causes-of-death.csv", "r")) !== false) {
     while (($data = fgetcsv($handle, 1000)) !== false) {
         $row++;
         if ($row == 0) {
-//            $statistic->addHeader(new Row($data[0], $data[1], $data[2], $data[3], $data[4], $data[5]));
+            $statistic->addHeader(new DeathCase($data[0], $data[1], $data[2], $data[3], $data[4], $data[5]));
             continue;
         }
 
-        $newRow = new DeathCase($data[1], $data[2], $data[3], $data[4], $data[5]);
+        $newRow = new DeathCase($data[0], $data[1], $data[2], $data[3], $data[4], $data[5]);
         $statistic->addCases($newRow);
 
-        if ($row == 1000) {
+        if ($row == 100) {
             break;
         }
     }
@@ -29,6 +29,6 @@ if (($handle = fopen("vtmec-causes-of-death.csv", "r")) !== false) {
 //
 //$statistic->listAllCauses();
 
-var_dump($statistic->getStatistic());
+var_dump($statistic->getTotalStatistic());
 
 //var_dump($statistic->filterCases($newRow->getViolentCircumstances()));

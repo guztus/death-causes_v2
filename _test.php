@@ -1,25 +1,27 @@
 <?php
 
-$statistics = [
-];
-
 $deathCauseList = [
-    'tata',
-    'tata',
-    'ta'
+    'time' => [],
+    'second' => [],
+    'thrd' => [],
+    'frth' => [],
+    'fth' => [],
 ];
-//array_push($statistics, ['t'] => 't');
-//$deathCause = 'tasd';
+$newList = ['asasdasdasdd'];
+$deathCauseList['time'] []= 'a';
+$deathCauseList['second'] []= 'b';
+$deathCauseList['thrd'] = array_merge($deathCauseList['thrd'], $newList);
 
-foreach($deathCauseList as $deathCause ) {
-    if (!isset($statistics[$deathCause])) {
-        $newValue = array(
-            $deathCause => 1,
-        );
-        $statistics = array_merge($statistics, $newValue);
-    } else {
-        $statistics[$deathCause]++;
-    }
-}
-//var_dump($newValue);
-var_dump($statistics);
+
+$randomList = [
+    2,
+    3,
+    4,
+    10,
+    1000,
+    -1111,
+];
+
+var_dump(sort($randomList));
+
+//var_dump($deathCauseList);

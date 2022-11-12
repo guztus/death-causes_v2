@@ -2,19 +2,26 @@
 
 class DeathCase
 {
+    private string $id;
     private string $date;
     private string $deathCause;
     private string $nonViolentCause;
     private string $violentCircumstances;
     private string $violentCause;
 
-    public function __construct(string $date, string $deathCause, string $nonViolentCause, string $violentCircumstances, string $violentCause)
+    public function __construct(string $id, string $date, string $deathCause, string $nonViolentCause, string $violentCircumstances, string $violentCause)
     {
+        $this->id = $id;
         $this->date = $date;
         $this->deathCause = $deathCause;
         $this->nonViolentCause = $nonViolentCause;
         $this->violentCircumstances = $violentCircumstances;
         $this->violentCause = $violentCause;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
     }
 
     public function getDate(): string
@@ -50,4 +57,5 @@ class DeathCase
         }
         return $this->violentCircumstances;
     }
+
 }
