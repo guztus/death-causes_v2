@@ -4,7 +4,7 @@ class DeathCaseCollection
 {
     private ?array $deathCases;
     private ?array $statistic = [];
-    private ?DeathCase $header;
+    private ?array $header;
     private array $statisticsByColumns = [];
     private array $deathCauseList = [];
 
@@ -13,12 +13,12 @@ class DeathCaseCollection
         $this->deathCases = $deathCases;
     }
 
-    public function addHeader(DeathCase $headerRow)
+    public function addHeader(array $headerRow)
     {
         $this->header = $headerRow;
     }
 
-    public function getHeader(): DeathCase
+    public function getHeader(): array
     {
         return $this->header;
     }
@@ -36,12 +36,12 @@ class DeathCaseCollection
 
     public function listAllCauses(): array
     {
-        $headerId = $this->getHeader()->getId();
-        $headerDate = $this->getHeader()->getDate();
-        $headerDeathCause = $this->getHeader()->getDeathCause();
-        $headerNonViolentCause = $this->getHeader()->getNonViolentCause();
-        $headerViolentCause = $this->getHeader()->getViolentCause();
-        $headerViolentCircumstances = $this->getHeader()->getViolentCircumstances();
+        $headerId = $this->getHeader()[0];
+        $headerDate = $this->getHeader()[1];
+        $headerDeathCause = $this->getHeader()[2];
+        $headerNonViolentCause = $this->getHeader()[3];
+        $headerViolentCause = $this->getHeader()[4];
+        $headerViolentCircumstances = $this->getHeader()[5];
 
         $deathCauseList = [];
 
@@ -88,7 +88,7 @@ class DeathCaseCollection
         return $deathCauseList;
     }
 
-    private function createTotalStatistic(): void
+    public function createTotalStatistic(): void
     {
         foreach($this->listAllCauses() as $deathCauseCol) {
             foreach($deathCauseCol as $deathCause) {
@@ -106,12 +106,13 @@ class DeathCaseCollection
 
     public function getTotalStatistic(): ?array
     {
+
         $this->createTotalStatistic();
         arsort($this->statistic);
         return $this->statistic;
     }
 
-    public function getStatisticByColumns($sortType)
+    public function getStatisticByColumns($sortType): array
     {
         if ($sortType == 0) {
             foreach($this->listAllCauses() as $deathCauseCol) {
@@ -122,11 +123,10 @@ class DeathCaseCollection
         } else {
         foreach($this->listAllCauses() as $deathCauseCol) {
             $deathCauseCol = array_count_values($deathCauseCol);
+            asort($deathCauseCol);
             $this->statisticsByColumns []= $deathCauseCol;
             }
         }
         return $this->statisticsByColumns;
-
-//        return $this->deathCauseList;
     }
 }
