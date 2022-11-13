@@ -7,6 +7,7 @@ class DeathCaseCollection
     private ?array $header;
     private array $statisticsByColumns = [];
     private array $deathCauseList = [];
+    private string $allCaseList = ' ';
 
     public function __construct(?array ...$deathCases)
     {
@@ -42,8 +43,6 @@ class DeathCaseCollection
         $headerNonViolentCause = $this->getHeader()[3];
         $headerViolentCause = $this->getHeader()[4];
         $headerViolentCircumstances = $this->getHeader()[5];
-
-        $deathCauseList = [];
 
         $deathCauseList[$headerId] = [];
         $deathCauseList[$headerDate] = [];
@@ -106,13 +105,11 @@ class DeathCaseCollection
 
     public function getTotalStatistic(): ?array
     {
-
-        $this->createTotalStatistic();
         arsort($this->statistic);
         return $this->statistic;
     }
 
-    public function getStatisticByColumns($sortType): array
+    public function createStatisticByColumns($sortType): void
     {
         if ($sortType == 0) {
             foreach($this->listAllCauses() as $deathCauseCol) {
@@ -127,6 +124,33 @@ class DeathCaseCollection
             $this->statisticsByColumns []= $deathCauseCol;
             }
         }
+    }
+
+    public function getStatisticByColumns(): array
+    {
         return $this->statisticsByColumns;
+    }
+
+    public function createListOfAllCases(): string
+    {
+        $this->listAllCauses();
+        foreach ($this->deathCauseList as $column)
+        {
+            $this->allCaseList .= implode(' ', $column);
+        }
+        $this->allCaseList = strtolower($this->allCaseList);
+        return $this->allCaseList;
+    }
+
+    public function totalCaseCount(): int
+    {
+        return count($this->deathCases);
+    }
+
+    public function searchCause (string $deathCause): int
+    {
+        $deathCause = trim($deathCause);
+        $deathCause = " " . $deathCause;
+        return substr_count($this->allCaseList, $deathCause);
     }
 }
