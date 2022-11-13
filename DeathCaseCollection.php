@@ -1,10 +1,12 @@
-<?php
+<?php declare(strict_types=1);
 
 class DeathCaseCollection
 {
     private ?array $deathCases;
     private ?array $statistic = [];
     private ?DeathCase $header;
+    private array $statisticsByColumns = [];
+    private array $deathCauseList = [];
 
     public function __construct(?array ...$deathCases)
     {
@@ -82,10 +84,11 @@ class DeathCaseCollection
                 );
             }
         }
+        $this->deathCauseList = $deathCauseList;
         return $deathCauseList;
     }
 
-    public function createTotalStatistic(): void
+    private function createTotalStatistic(): void
     {
         foreach($this->listAllCauses() as $deathCauseCol) {
             foreach($deathCauseCol as $deathCause) {
@@ -108,20 +111,22 @@ class DeathCaseCollection
         return $this->statistic;
     }
 
-    public function getStatisticByColumns()
+    public function getStatisticByColumns($sortType)
     {
+        if ($sortType == 0) {
+            foreach($this->listAllCauses() as $deathCauseCol) {
+                $deathCauseCol = array_count_values($deathCauseCol);
+                arsort($deathCauseCol);
+                $this->statisticsByColumns []= $deathCauseCol;
+            }
+        } else {
         foreach($this->listAllCauses() as $deathCauseCol) {
-            foreach($deathCauseCol as $deathCause) {
-                if (!isset($this->statistic[$deathCauseCol][$deathCause])) {
-                    $newValue = array(
-                        $deathCause => 1,
-                    );
-                    $this->statistic[$deathCauseCol] = array_merge($this->statistic[$deathCauseCol], $newValue);
-                } else {
-                    $this->statistic[$deathCauseCol][$deathCause]++;
-                }
+            $deathCauseCol = array_count_values($deathCauseCol);
+            $this->statisticsByColumns []= $deathCauseCol;
             }
         }
-        return $this->statistic;
+        return $this->statisticsByColumns;
+
+//        return $this->deathCauseList;
     }
 }

@@ -29,6 +29,17 @@ if (($handle = fopen("vtmec-causes-of-death.csv", "r")) !== false) {
 //
 //$statistic->listAllCauses();
 
-var_dump($statistic->getTotalStatistic());
+var_dump($statistic->getStatisticByColumns(0));
+
+foreach($statistic->getStatisticByColumns(0) as $column) {
+//    var_dump($column);
+
+    var_dump($statistic->getHeader()->getId());
+
+    foreach ($column as $key => $deathCause) {
+        echo $key . " - " . $deathCause . PHP_EOL;
+    }
+    echo PHP_EOL;
+}
 
 //var_dump($statistic->filterCases($newRow->getViolentCircumstances()));

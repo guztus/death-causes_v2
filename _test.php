@@ -20,8 +20,12 @@ $randomList = [
     10,
     1000,
     -1111,
+    -1111,
+
 ];
 
-var_dump(sort($randomList));
+//var_dump(sort($randomList));
 
 //var_dump($deathCauseList);
+
+var_dump(array_count_values($randomList));
