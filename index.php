@@ -17,7 +17,7 @@ if (($handle = fopen("vtmec-causes-of-death.csv", "r")) !== false) {
         $newRow = new DeathCase($data[0], $data[1], $data[2], $data[3], $data[4], $data[5]);
         $statistic->addCases($newRow);
 
-//        row limiter
+////        row limiter
 //        if ($row == 100) {
 //            break;
 //        }
@@ -82,8 +82,8 @@ while(true) {
             $casesFound = $statistic->searchCause($userSearch);
 
             echo PHP_EOL;
-            echo "'{$userSearch}' was found in " . $casesFound . " cases." . PHP_EOL;
-            echo "Approx. " . round(($casesFound / $statistic->totalCaseCount()) * 100) . "% of all cases" . PHP_EOL;
+            echo "'{$userSearch}' was found in " . $casesFound . " cases. (from " . $statistic->getTotalCaseCount() . " total cases)" . PHP_EOL;
+            echo "Approx. " . round(($casesFound / $statistic->getTotalCaseCount()) * 100) . "% of all cases" . PHP_EOL;
             echo PHP_EOL;
             break;
     }

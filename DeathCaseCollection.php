@@ -2,16 +2,16 @@
 
 class DeathCaseCollection
 {
-    private ?array $deathCases;
-    private ?array $statistic = [];
     private ?array $header;
+    private ?array $deathCases = [];
+    private ?array $statistic = [];
     private array $statisticsByColumns = [];
     private array $deathCauseList = [];
     private string $allCaseList = ' ';
 
-    public function __construct(?array ...$deathCases)
+    public function __construct(?array ...$deathCase)
     {
-        $this->deathCases = $deathCases;
+        $this->deathCases = array_merge($this->deathCases, $deathCase);
     }
 
     public function addHeader(array $headerRow)
@@ -142,7 +142,7 @@ class DeathCaseCollection
         return $this->allCaseList;
     }
 
-    public function totalCaseCount(): int
+    public function getTotalCaseCount(): int
     {
         return count($this->deathCases);
     }
